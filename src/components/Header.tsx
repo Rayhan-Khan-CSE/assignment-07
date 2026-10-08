@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import logo from "@/assets/logo-icon.png"
+import NavLinks from './NavLinks';
 
 const Header = () => {
     return (
@@ -19,6 +20,9 @@ const Header = () => {
                 <button className='p-3 font-bold text-[#1D271F]'>সাইন ইন</button>
                 <button className='bg-[#05893E] text-[#F3FBF4] rounded-lg p-3 font-bold'>সাইন আপ</button>
             </div>
+        </div>
+        <div className='border border-[#F0F5F0]'>
+        <NavLinks/>
         </div>
         </nav>
     );
