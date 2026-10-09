@@ -1,18 +1,18 @@
 import React from 'react';
-import IBajarDor from '@/types/type';
-export interface AllProductsProps{
-    data:IBajarDor[];
-}
-
-
-const AllProducts = ({ data }:AllProductsProps) => {
+import { AllProductsProps } from './AllProducts';
+import Image from 'next/image';
+import logo from "@/assets/down.png"
+const PriceIncrease = ({data}:AllProductsProps) => {
+    const increase = [...data].sort((a,b) => Number(b.change.pct) - Number(a.change.pct)).slice(0,6);
     return (
-        <div className='max-w-300 mx-auto px-4 mt-5'>
-            <p className='font-extrabold text-3xl'>সব পণ্য</p>
-            <p>মোট ৩৩টি পণ্য দেখানো হচ্ছে</p>
+        <div className='max-w-300 mx-auto px-4'>
+            <div className='flex items-center gap-3'>
+            <Image src={logo} height={20} width={20} alt='logo'></Image>
+            <p className='font-extrabold text-3xl'>আজ দাম বেড়েছে</p>
+            </div>
             <div className='grid grid-cols-3 gap-3 rounded-2xl mt-4'>
                 {
-                    data.map((m) =>
+                    increase.map((m) =>
                         <div key={m.id} className=''>
                             <div className="card card-border bg-base-200 ">
                                 <div className="card-body">
@@ -47,4 +47,4 @@ const AllProducts = ({ data }:AllProductsProps) => {
     );
 };
 
-export default AllProducts;
+export default PriceIncrease;
