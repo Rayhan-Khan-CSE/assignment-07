@@ -1,19 +1,20 @@
 import React from 'react';
 import IBajarDor from '@/types/type';
-export interface AllProductsProps{
-    data:IBajarDor[];
+import Link from 'next/link';
+export interface AllProductsProps {
+    data: IBajarDor[];
 }
 
 
-const AllProducts = ({ data }:AllProductsProps) => {
+const AllProducts = ({ data }: AllProductsProps) => {
     return (
         <div className='max-w-300 mx-auto px-4 mt-5'>
             <p className='font-extrabold text-3xl'>সব পণ্য</p>
-            <p>মোট ৩৩টি পণ্য দেখানো হচ্ছে</p>
+            <p>মোট {data.length}টি পণ্য দেখানো হচ্ছে</p>
             <div className='grid grid-cols-3 gap-3 rounded-2xl mt-4'>
                 {
                     data.map((m) =>
-                        <div key={m.id} className=''>
+                        <Link key={m.id} href={`/details/${m.id}`} className='block'>
                             <div className="card card-border bg-base-200 ">
                                 <div className="card-body">
                                     <div className='flex justify-left items-center gap-4'>
@@ -21,25 +22,25 @@ const AllProducts = ({ data }:AllProductsProps) => {
                                         <div>
                                             <h2 className="card-title font-extrabold">{m.nameBn}</h2>
                                             <p>{m.unit}</p>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div>
                                         <p className='font-bold'>আজকের দাম</p>
                                         <div className='flex justify-between'>
-                                        <div className='flex items-center gap-2'>
-                                            <p className='font-extrabold text-2xl'>{m.today}</p>
-                                            <p>টাকা</p>
-                                        </div>
-                                        <div className='flex items-center gap-2'>
-                                            <p>{m.change.dir}</p>
-                                            <p>{m.change.pct}</p>
-                                            <p>%</p>
-                                        </div>
+                                            <div className='flex items-center gap-2'>
+                                                <p className='font-extrabold text-2xl'>{m.today}</p>
+                                                <p>টাকা</p>
+                                            </div>
+                                            <div className='flex items-center gap-2'>
+                                                <p>{m.change.dir}</p>
+                                                <p>{m.change.pct}</p>
+                                                <p>%</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     )
                 }
             </div>

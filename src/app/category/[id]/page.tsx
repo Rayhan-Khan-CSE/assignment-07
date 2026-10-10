@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 interface ICategoryProps {
     params: Promise<{ id: string;}>;
@@ -47,7 +48,7 @@ const Category = async ({params}:ICategoryProps) => {
             <div className='grid grid-cols-3 gap-3 rounded-2xl mt-4'>
                 {
                     data.map((m:ICategory) =>
-                        <div key={m.id} className=''>
+                        <Link key={m.id} href={`/details/${m.id}`} className='block'>
                             <div className="card card-border bg-base-200 ">
                                 <div className="card-body">
                                     <div className='flex justify-left items-center gap-4'>
@@ -73,7 +74,7 @@ const Category = async ({params}:ICategoryProps) => {
                                 </div>
                             </div>
                         </div>
-                        </div>
+                        </Link>
             )
                 }
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { AllProductsProps } from './AllProducts';
 import Image from 'next/image';
 import logo from "@/assets/up.png"
+import Link from 'next/link';
 
 const PriceDecrease = ({ data }: AllProductsProps) => {
     const decrease = [...data].sort((a, b) => Number(a.change.pct) - Number(b.change.pct)).slice(0, 6);
@@ -14,7 +15,7 @@ const PriceDecrease = ({ data }: AllProductsProps) => {
             <div className='grid grid-cols-3 gap-3 rounded-2xl mt-4'>
                 {
                     decrease.map((m) =>
-                        <div key={m.id} className=''>
+                        <Link key={m.id} href={`/details/${m.id}`} className='block'>
                             <div className="card card-border bg-base-200 ">
                                 <div className="card-body">
                                     <div className='flex justify-left items-center gap-4'>
@@ -40,7 +41,7 @@ const PriceDecrease = ({ data }: AllProductsProps) => {
                                 </div>
                             </div>
                         </div>
-                        </div>
+                        </Link>
             )
                 }
         </div>
