@@ -4,7 +4,7 @@ import "react-marquee-text/dist/styles.css"
 import IBajarDor from '@/types/type';
 import Link from 'next/link';
 const Marquee = async() => {
-    const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products");
+    const res = await fetch("https://openapi.programming-hero.com/api/bazardor/products");
     const data = await res.json();
     return (
         <div className='bg-[#FAFCFA] py-3'>

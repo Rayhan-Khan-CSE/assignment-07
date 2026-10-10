@@ -7,7 +7,7 @@ interface IDetails {
 
 const DetailsPage = async ({ params }: IDetails) => {
     const { id } = await params;
-    const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/products/${id}`);
+    const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${id}`);
     const data = await res.json();
     console.log(data);
     const avgPrice = (data.today + data.yesterday + data.lastWeek + data.lastMonth) / 4;

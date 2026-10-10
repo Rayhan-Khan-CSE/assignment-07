@@ -4,7 +4,7 @@ import PriceDecrease from "@/components/PriceDecrease";
 import PriceIncrease from "@/components/PriceIncrease";
 
 export default async function Home() {
-  const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products");
+  const res = await fetch("https://openapi.programming-hero.com/api/bazardor/products");
   const data = await res.json();
   return (
     <div>
