@@ -1,28 +1,50 @@
+"use client";
 import Image from "next/image";
 import logo1 from "@/assets/Google.png"
 import logo2 from "@/assets/Github.png"
+import { redirect } from "next/navigation";
+import { signUp } from "@/lib/auth-client";
+import React from "react";
 
 const SignUpPage = () => {
+    const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const user = Object.fromEntries(formData.entries()) as {name: string, email: string, password: string};
+        console.log(user);
+        const {data, error} = await signUp.email({
+            name: user.name,
+            email: user.email,
+            password: user.password
+        });
+        if(data){
+            console.log(data);
+            redirect("/");
+        }
+        if(error){
+            console.log(error);
+        }
+    }
     return (
         <div className="max-w-300 mx-auto w-full flex flex-col justify-center items-center my-5">
             <h2 className="font-extrabold text-3xl">অ্যাকাউন্ট তৈরি করুন</h2>
             <p className="pb-6">বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।</p>
-           <form>
+           <form onSubmit={onSubmit}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4">
 
                     <label className="label text-lg text-[#1D271F]">নাম</label>
-                    <input type="email" className="input text-lg text-[#1D271F]" placeholder="যেমন: রহিম উদ্দিন" />
+                    <input name="name" type="text" className="input text-lg text-[#1D271F]" placeholder="যেমন: রহিম উদ্দিন" />
 
                     <label className="label text-lg text-[#1D271F]">ইমেইল</label>
-                    <input type="email" className="input text-lg text-[#1D271F]" placeholder="you@example.com" />
+                    <input name="email" type="email" className="input text-lg text-[#1D271F]" placeholder="you@example.com" />
 
                     <label className="label text-lg text-[#1D271F]">পাসওয়ার্ড</label>
-                    <input type="password" className="input text-lg text-[#1D271F]" placeholder="কমপক্ষে ৮ অক্ষর" />
+                    <input name="password" type="password" className="input text-lg text-[#1D271F]" placeholder="কমপক্ষে ৮ অক্ষর" />
 
                     <label className="label text-lg text-[#1D271F]">পাসওয়ার্ড নিশ্চিত করুন</label>
-                    <input type="password" className="input text-lg text-[#1D271F]" placeholder="আবার লিখুন" />
+                    <input name="confirmPassword" type="password" className="input text-lg text-[#1D271F]" placeholder="আবার লিখুন" />
 
-                    <button className="btn bg-[#05893E] text-white mt-4 text-lg text-[#1D271F]">অ্যাকাউন্ট তৈরি করুন</button>
+                    <button type="submit" className="btn bg-[#05893E] text-[#1D271F] mt-4 text-lg ">অ্যাকাউন্ট তৈরি করুন</button>
 
                     <div className="flex w-full flex-col">
                         <div className="divider text-lg text-[#1D271F]">অথবা</div>

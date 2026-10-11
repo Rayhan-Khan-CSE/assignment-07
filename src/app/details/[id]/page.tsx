@@ -12,15 +12,16 @@ const DetailsPage = async ({ params }: IDetails) => {
     console.log(data);
     const avgPrice = (data.today + data.yesterday + data.lastWeek + data.lastMonth) / 4;
     return (
+        <div className=" bg-[#F0F5F0] text-[#26332A]">
         <div className="max-w-300 mx-auto w-full px-4 py-5">
-            <div className="text-sm mb-5 flex gap-2 flex-wrap items-center">
+            <div className="text-sm mb-5 flex gap-2 flex-wrap items-center text-[#59665D]">
                 <Link href="/">হোম</Link>
                 <span className="text-[10px] items-center"><FaGreaterThan /></span>
                 <span>{data.categoryNameBn}</span>
                 <span className="text-[10px] items-center"><FaGreaterThan /></span>
                 <span>{data.nameBn}</span>
             </div>
-            <div className="bg-[#FAFCFA] border border-[#E1E8E1] rounded-2xl p-5 flex justify-between gap-4 items-center">
+            <div className="bg-[#FAFCFA] border border-[#E1E8E1] rounded-xl p-4 flex justify-between gap-4 items-center">
                 <div className="flex items-center gap-4 w-full">
                     <div className="bg-[#F0F5F0] rounded-xl p-4 text-4xl">{data.image}</div>
                     <div>
@@ -55,28 +56,28 @@ const DetailsPage = async ({ params }: IDetails) => {
                     </div>
                 </div>
             </div>
-            <div className="bg-[#FAFCFA] border border-[#E1E8E1] rounded-2xl p-5 mt-5">
-                <h2 className="font-bold text-xl mb-5">বাজারভিত্তিক আজকের দাম</h2>
-                <div className="overflow-x-auto">
-                    <table className="table w-full">
-                        <thead>
+            <div className="bg-[#FAFCFA] border border-[#E1E8E1] rounded-xl p-3 mt-4">
+                <h2 className="font-bold text-lg mb-3">বাজারভিত্তিক আজকের দাম</h2>
+                <div className="overflow-x-auto rounded-xl border border-[#E1E8E1]">
+                    <table className="table w-full text-md">
+                        <thead className="bg-[#FAFCFA] text-[#69756C]">
                             <tr>
-                                <th>বাজার</th>
-                                <th>বিভাগ</th>
-                                <th>সর্বনিম্ন</th>
-                                <th>সর্বাধিক</th>
-                                <th>গড়</th>
+                                <th className="font-medium whitespace-nowrap p-2 text-left">বাজার</th>
+                                <th className="font-medium whitespace-nowrap p-2 text-center">বিভাগ</th>
+                                <th className="font-medium whitespace-nowrap p-2 text-center">সর্বনিম্ন</th>
+                                <th className="font-medium whitespace-nowrap p-2 text-center">সর্বাধিক</th>
+                                <th className="font-medium whitespace-nowrap p-2 text-right">গড়</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 data.markets.map((m, i) => (
-                                    <tr key={`${m.market}-${i}`}>
-                                        <td>{m.market}</td>
-                                        <td>{m.division}</td>
-                                        <td>{m.min} টাকা</td>
-                                        <td>{m.max} টাকা</td>
-                                        <td>{(((m.min) + (m.max)) / 2)?.toFixed(2)} টাকা</td>
+                                    <tr key={`${m.market}-${i}`} className="border-b border-[#1D271F] last:border-b-0 odd:bg-[#FAFCFA] even:bg-[#F0F5F0]">
+                                        <td className="whitespace-nowrap p-2 text-left">{m.market}</td>
+                                        <td className="whitespace-nowrap p-2 text-center">{m.division}</td>
+                                        <td className="whitespace-nowrap p-2 text-center">{m.min} টাকা</td>
+                                        <td className="whitespace-nowrap p-2 text-center">{m.max} টাকা</td>
+                                        <td className="whitespace-nowrap p-2 text-right font-semibold">{(((m.min) + (m.max)) / 2)?.toFixed(2)} টাকা</td>
                                     </tr>
                                 ))
                             }
@@ -85,6 +86,7 @@ const DetailsPage = async ({ params }: IDetails) => {
                 </div>
 
             </div>
+        </div>
         </div>
     );
 };

@@ -3,6 +3,7 @@ import React from 'react';
 import logo from "@/assets/logo-icon.png"
 import NavLinks from './NavLinks';
 import Link from 'next/link';
+import UserInfo from './UserInfo';
 
 const Header = () => {
     return (
@@ -19,10 +20,7 @@ const Header = () => {
                 </div>
             </div>
             </Link>
-            <div className='flex gap-3'>
-                <button className='p-3 font-bold text-[#1D271F]'>সাইন ইন</button>
-                <button className='bg-[#05893E] text-[#F3FBF4] rounded-lg p-3 font-bold'>সাইন আপ</button>
-            </div>
+            <UserInfo/>
         </div>
         <div className='border border-[#F0F5F0]'>
         <NavLinks/>
