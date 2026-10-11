@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { FaGreaterThan } from "react-icons/fa";
 interface IDetails {
     params: Promise<{ id: string }>;
@@ -10,6 +11,9 @@ const DetailsPage = async ({ params }: IDetails) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${id}`);
     const data = await res.json();
     console.log(data);
+    if(!data){
+        notFound()
+    }
     const avgPrice = (data.today + data.yesterday + data.lastWeek + data.lastMonth) / 4;
     return (
         <div className=" bg-[#F0F5F0] text-[#26332A]">

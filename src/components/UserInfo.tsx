@@ -21,7 +21,7 @@ const UserInfo = () => {
                 user ?
                     <div>
                         <button onClick={() => setOpen(!open)} className="flex items-center gap-2" >
-                            <span>{user.image ? <Image width={20} height={20} src={user.image} alt="Profile" className="w-8 h-8 rounded-full object-cover"></Image> : <CgProfile />}</span>
+                            {/* <span>{user.image ? <Image width={20} height={20} src={user.image} alt="Profile" className="w-8 h-8 rounded-full object-cover"></Image> : <CgProfile />}</span> */}
                             <span className="text-sm font-medium text-[#1D271F]"> {user.name} </span>
                             <span className="text-xs"><MdArrowDropDown /></span> 
                         </button>
