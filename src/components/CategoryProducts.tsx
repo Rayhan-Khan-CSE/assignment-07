@@ -56,7 +56,7 @@ const CategoryProducts = ({data}:CategoryProductsProps) => {
                 </div>
             </div>
             <p>মোট {sortProducts.length}টি পণ্য দেখানো হচ্ছে</p>
-            <div className='grid grid-cols-3 gap-3 rounded-2xl mt-4'>
+            <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 rounded-2xl mt-4'>
                 {
                     sortProducts.map((m:ICategory) =>
                         <Link key={m.id} href={`/details/${m.id}`} className='block'>

@@ -6,6 +6,9 @@ import Link from 'next/link';
 import UserInfo from './UserInfo';
 
 const Header = () => {
+    const date = new Date().toLocaleDateString("bn-BD",{
+        dateStyle: "full"
+    })
     return (
         <nav className='bg-[#F3FBF4]'>
         <div className='max-w-300 mx-auto px-4 w-full flex justify-between py-5'>
@@ -16,7 +19,7 @@ const Header = () => {
                 </div>
                 <div>
                     <h2 className='text-2xl font-bold text-[#1D271F]'>বাজার দর</h2>
-                    <p>মঙ্গলবার, ৬ অক্টোবর, ২০২৬</p>
+                    <p>{date}</p>
                 </div>
             </div>
             </Link>

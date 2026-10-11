@@ -8,10 +8,10 @@ export interface AllProductsProps {
 
 const AllProducts = ({ data }: AllProductsProps) => {
     return (
-        <div className='max-w-300 mx-auto px-4 mt-5'>
+        <div className='max-w-300 mx-auto px-4 my-5'>
             <p className='font-extrabold text-3xl'>সব পণ্য</p>
             <p>মোট {data.length}টি পণ্য দেখানো হচ্ছে</p>
-            <div className='grid grid-cols-3 gap-3 rounded-2xl mt-4'>
+            <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 rounded-2xl mt-4'>
                 {
                     data.map((m) =>
                         <Link key={m.id} href={`/details/${m.id}`} className='block'>

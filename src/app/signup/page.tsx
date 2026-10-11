@@ -12,12 +12,13 @@ const SignUpPage = () => {
     const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const user = Object.fromEntries(formData.entries()) as {name: string, email: string, password: string};
+        const user = Object.fromEntries(formData.entries()) as {name: string, email: string, password: string, image:string};
         console.log(user);
         const {data, error} = await signUp.email({
             name: user.name,
             email: user.email,
-            password: user.password
+            password: user.password,
+            image: user?.image
         });
         if(data){
             console.log(data);
@@ -33,11 +34,13 @@ const SignUpPage = () => {
                  const data = await authClient.signIn.social({
         provider: "google",
       });
+      console.log(data);
             }
     const handleGithubSignIn = async () => {
                  const data = await authClient.signIn.social({
         provider: "google",
       });
+      console.log(data);
             }
     return (
         <div className="max-w-300 mx-auto w-full flex flex-col justify-center items-center my-5">

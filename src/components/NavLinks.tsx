@@ -11,9 +11,9 @@ const NavLinks = async () => {
     const res = await fetch("https://openapi.programming-hero.com/api/bazardor/categories");
     const data = await res.json();
     return (
-        <div className='max-w-300 mx-auto px-6 flex justify-left gap-6 p-4  '>
+        <div className='max-w-300 mx-auto px-6 flex justify-left gap-6 p-4 '>
             {
-                data.map((n:ILink,i:number) => <Link key={i} href={`/category/${n.slug}`}> {n.icon} {n.nameBn} </Link>)
+                data.map((n:ILink,i:number) => <Link key={i} href={`/category/${n.slug}`}> <span className='hover:bg-green-700'>{n.icon} {n.nameBn}</span> </Link>)
             }
         </div>
     );

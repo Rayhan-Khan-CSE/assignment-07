@@ -11,7 +11,7 @@ const PriceIncrease = ({data}:AllProductsProps) => {
             <Image src={logo} height={20} width={20} alt='logo'></Image>
             <p className='font-extrabold text-3xl'>আজ দাম বেড়েছে</p>
             </div>
-            <div className='grid grid-cols-3 gap-3 rounded-2xl mt-4'>
+            <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 rounded-2xl mt-4'>
                 {
                     increase.map((m) =>
                         <Link key={m.id} href={`/details/${m.id}`} className='block'>

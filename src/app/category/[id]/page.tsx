@@ -14,7 +14,7 @@ const Category = async ({params}:ICategoryProps) => {
             notFound()
         }
     return (
-        <div className="max-w-300 mx-auto w-full ">
+        <div className="max-w-300 mx-auto w-full mb-5 ">
             <CategoryProducts data={data}/>
         </div>
     );

@@ -14,7 +14,12 @@ const DetailsPage = async ({ params }: IDetails) => {
     if(!data){
         notFound()
     }
-    const avgPrice = (data.today + data.yesterday + data.lastWeek + data.lastMonth) / 4;
+    const lowestPrice = Math.min(...data.markets.map((m) => m.min));
+
+    const highestPrice = Math.max(...data.markets.map((m) => m.max));
+
+    const avgPrice = data.markets.reduce((sum, m) => sum + (m.min + m.max) / 2, 0) /
+    data.markets.length;
     return (
         <div className=" bg-[#F0F5F0] text-[#26332A]">
         <div className="max-w-300 mx-auto w-full px-4 py-5">
@@ -36,26 +41,26 @@ const DetailsPage = async ({ params }: IDetails) => {
                 </div>
                 <div className="bg-[#F0F5F0] rounded-2xl p-4 text-center min-w-30">
                     <p className="text-sm">আজকের দাম</p>
-                    <p className="text-3xl font-extrabold">{data.today}</p>
+                    <p className="text-3xl font-extrabold">{Number(data.today).toLocaleString("bn-BD")}</p>
                     <p className="text-sm">টাকা/{data.unit}</p>
                 </div>
             </div>
             <div className="bg-[#FAFCFA] border border-[#E1E8E1] rounded-2xl p-5 mt-5">
                 <h2 className="text-2xl font-bold px-4">দামের সারসংক্ষেপ</h2>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     <div className="border border-[#E1E8E1] rounded-xl p-4">
                         <p className="text-sm">সর্বনিম্ন দাম</p>
-                        <p className="text-2xl font-extrabold text-green-500">{data.yesterday} টাকা</p>
+                        <p className="text-2xl font-extrabold text-green-500">{Number(lowestPrice).toLocaleString("bn-BD")} টাকা</p>
                         <p className="text-sm">সবচেয়ে কম দামের বাজার</p>
                     </div>
                     <div className="border border-[#E1E8E1] rounded-xl p-4">
                         <p className="text-sm">সর্বাধিক দাম</p>
-                        <p className="text-2xl font-extrabold text-red-500">{data.lastWeek} টাকা</p>
+                        <p className="text-2xl font-extrabold text-red-500">{Number(highestPrice).toLocaleString("bn-BD")} টাকা</p>
                         <p className="text-sm">সবচেয়ে বেশি দামের বাজার</p>
                     </div>
                     <div className="border border-[#E1E8E1] rounded-xl p-4">
                         <p className="text-sm">গড় দাম</p>
-                        <p className="text-2xl font-extrabold text-green-500">{avgPrice.toFixed(2)} টাকা</p>
+                        <p className="text-2xl font-extrabold text-green-500">{(avgPrice).toFixed(2).replace(/\.00$/, "")} টাকা</p>
                         <p className="text-sm">প্রতি কেজি-এর হিসাবে</p>
                     </div>
                 </div>
@@ -63,7 +68,7 @@ const DetailsPage = async ({ params }: IDetails) => {
             <div className="bg-[#FAFCFA] border border-[#E1E8E1] rounded-xl p-3 mt-4">
                 <h2 className="font-bold text-lg mb-3">বাজারভিত্তিক আজকের দাম</h2>
                 <div className="overflow-x-auto rounded-xl border border-[#E1E8E1]">
-                    <table className="table w-full text-md">
+                    <table className="table w-full min-w-150 text-sm sm:text-base">
                         <thead className="bg-[#FAFCFA] text-[#69756C]">
                             <tr>
                                 <th className="font-medium whitespace-nowrap p-2 text-left">বাজার</th>
@@ -81,7 +86,7 @@ const DetailsPage = async ({ params }: IDetails) => {
                                         <td className="whitespace-nowrap p-2 text-center">{m.division}</td>
                                         <td className="whitespace-nowrap p-2 text-center">{m.min} টাকা</td>
                                         <td className="whitespace-nowrap p-2 text-center">{m.max} টাকা</td>
-                                        <td className="whitespace-nowrap p-2 text-right font-semibold">{(((m.min) + (m.max)) / 2)?.toFixed(2)} টাকা</td>
+                                        <td className="whitespace-nowrap p-2 text-right font-semibold">{((m.min + m.max) / 2).toFixed(2).replace(/\.00$/, "")} টাকা</td>
                                     </tr>
                                 ))
                             }

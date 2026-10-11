@@ -1,18 +1,23 @@
 "use client"
 
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+import { CgProfile } from "react-icons/cg";
 
 const ProfilePage = () => {
     const handleUpdateUser = async (e: React.SubmitEvent<HTMLElement>) => {
             e.preventDefault();
             const formData = new FormData(e.target);
-            const newUser = Object.fromEntries(formData.entries()) as {name: string};
+            const newUser = Object.fromEntries(formData.entries()) as {name: string,image:string};
             await authClient.updateUser({
     name: newUser.name,
+    image: newUser?.image
 })
     }
     const { data: session } = authClient.useSession();
         const user = session?.user;
+        if (!user) return redirect("/");
     const handleSignOut = async () => {
          await authClient.signOut(); 
         };
@@ -25,7 +30,9 @@ const ProfilePage = () => {
             </div>
             <div className="flex justify-between items-center px-5 w-full bg-white my-4 py-3 rounded-2xl">
                 <div className="py-4 flex gap-3 items-center">
-                    <div className="h-15 w-15 bg-base-200 rounded-2xl"></div>
+                    <div className="h-15 w-15 bg-base-200 rounded-2xl">
+                        {user?.image ? <Image width={90} height={90} src={user.image} alt="Profile" className="h-full w-full object-cover rounded-2xl"></Image> : <CgProfile />}
+                    </div>
                     <div>
                     <p className="text-xl font-extrabold">{user?.name}</p>
                     <p>{user?.email}</p>

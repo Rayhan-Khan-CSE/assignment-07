@@ -27,7 +27,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Header></Header>
         <Marquee/>
+        <main className="bg-[#F0F5F0]">
         {children}
+        </main>
         <Footer></Footer>
         <ToastContainer />
         </body>
