@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from "react";
 import { CgProfile } from 'react-icons/cg';
 import { MdArrowDropDown } from 'react-icons/md';
+import toast from "react-hot-toast";
 
 const UserInfo = () => {
     const { data: session } = authClient.useSession();
@@ -12,7 +13,9 @@ const UserInfo = () => {
 
     const [open, setOpen] = useState(false); 
     const handleSignOut = async () => {
-         await authClient.signOut(); setOpen(false); 
+         await authClient.signOut();
+         toast.success("সফলভাবে সাইন আউট করেছেন!");
+          setOpen(false); 
         };
 
     return (

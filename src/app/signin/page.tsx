@@ -4,7 +4,7 @@ import logo1 from "@/assets/Google.png"
 import logo2 from "@/assets/Github.png"
 import { authClient, signIn } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Link from "next/link";
 const SignInPage = () => {
     const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
@@ -17,24 +17,24 @@ const SignInPage = () => {
                 password: user.password
             });
             if(data){
-                console.log(data);
-                redirect("/");
-                toast.success("Sign up successfully completed");
+                toast.success('সফলভাবে সাইন ইন করেছেন!');
+            redirect("/");
             }
             if(error){
-                console.log(error);
-                toast.error(error.message);
+                toast.error('ইমেইল অথবা পাসওয়ার্ড সঠিক নয়!');
             }
         }
         const handleGoogleSignIn = async () => {
              const data = await authClient.signIn.social({
     provider: "google",
   });
+        console.log(data);
         }
         const handleGithubSignIn = async () => {
              const data = await authClient.signIn.social({
     provider: "github",
   });
+        console.log(data);
         }
     return (
         <div className="max-w-300 mx-auto w-full flex flex-col justify-center items-center my-5">
@@ -51,7 +51,7 @@ const SignInPage = () => {
                     <input name="password" type="password" className="input text-lg text-[#1D271F]" placeholder="কমপক্ষে ৮ অক্ষর" />
 
 
-                    <button type="submit" className="btn bg-[#05893E] text-white mt-4 text-lg text-[#1D271F]">সাইন ইন</button>
+                    <button type="submit" className="btn bg-[#05893E] mt-4 text-lg text-[#1D271F]">সাইন ইন</button>
 
                     <div className="flex w-full flex-col">
                         <div className="divider text-lg text-[#1D271F]">অথবা</div>

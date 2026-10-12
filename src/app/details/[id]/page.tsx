@@ -5,11 +5,32 @@ import { FaGreaterThan } from "react-icons/fa";
 interface IDetails {
     params: Promise<{ id: string }>;
 }
+interface IMarket {
+    market: string;
+    division: string;
+    min: number;
+    max: number;
+}
+
+interface IProduct {
+    categoryNameBn: string;
+    nameBn: string;
+    image: string;
+    unit: string;
+    today: number;
+    yesterday: number;
+    lastWeek: number;
+    change: {
+        dir: string;
+        pct: number;
+    };
+    markets: IMarket[];
+}
 
 const DetailsPage = async ({ params }: IDetails) => {
     const { id } = await params;
     const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${id}`);
-    const data = await res.json();
+    const data: IProduct = await res.json();
     console.log(data);
     if(!data){
         notFound()
@@ -18,8 +39,7 @@ const DetailsPage = async ({ params }: IDetails) => {
 
     const highestPrice = Math.max(...data.markets.map((m) => m.max));
 
-    const avgPrice = data.markets.reduce((sum, m) => sum + (m.min + m.max) / 2, 0) /
-    data.markets.length;
+    const avgPrice = (lowestPrice + highestPrice)/2;
     return (
         <div className=" bg-[#F0F5F0] text-[#26332A]">
         <div className="max-w-300 mx-auto w-full px-4 py-5">
@@ -35,14 +55,14 @@ const DetailsPage = async ({ params }: IDetails) => {
                     <div className="bg-[#F0F5F0] rounded-xl p-4 text-4xl">{data.image}</div>
                     <div>
                         <h2 className="text-3xl font-extrabold">{data.nameBn}</h2>
-                        <p>{data.categoryNameBn} . {data.unit}</p>
-                        <p>{data.change.dir}{data.change.pct}% { }দামের পরিবর্তন</p>
+                        <p>প্রতি {data.unit === "kg" ? "কেজি" : data.unit === "litre" ? "লিটার" : data.unit === "piece" ? "পিস" : data.unit === "dozen" ? "ডজন" : data.unit} · {data.categoryNameBn}</p>
+                        <p>গতকালের তুলনায় আজ দাম বেড়েছে · {Number((data.today) - (data.yesterday)).toLocaleString("bn-BD")} টাকা</p>
                     </div>
                 </div>
                 <div className="bg-[#F0F5F0] rounded-2xl p-4 text-center min-w-30">
                     <p className="text-sm">আজকের দাম</p>
                     <p className="text-3xl font-extrabold">{Number(data.today).toLocaleString("bn-BD")}</p>
-                    <p className="text-sm">টাকা/{data.unit}</p>
+                    <p className="text-sm">টাকা/{data.unit === "kg" ? "কেজি" : data.unit === "litre" ? "লিটার" : data.unit === "piece" ? "পিস" : data.unit === "dozen" ? "ডজন" : data.unit}</p>
                 </div>
             </div>
             <div className="bg-[#FAFCFA] border border-[#E1E8E1] rounded-2xl p-5 mt-5">
@@ -60,8 +80,8 @@ const DetailsPage = async ({ params }: IDetails) => {
                     </div>
                     <div className="border border-[#E1E8E1] rounded-xl p-4">
                         <p className="text-sm">গড় দাম</p>
-                        <p className="text-2xl font-extrabold text-green-500">{(avgPrice).toFixed(2).replace(/\.00$/, "")} টাকা</p>
-                        <p className="text-sm">প্রতি কেজি-এর হিসাবে</p>
+                        <p className="text-2xl font-extrabold text-green-500">{Number(avgPrice.toFixed(2).replace(/\.00$/, "")).toLocaleString("bn-BD")} টাকা</p>
+                        <p className="text-sm">প্রতি {data.unit === "kg" ? "কেজি" : data.unit === "litre" ? "লিটার" : data.unit === "piece" ? "পিস" : data.unit === "dozen" ? "ডজন" : data.unit}-এর হিসাবে</p>
                     </div>
                 </div>
             </div>
@@ -84,9 +104,9 @@ const DetailsPage = async ({ params }: IDetails) => {
                                     <tr key={`${m.market}-${i}`} className="border-b border-[#1D271F] last:border-b-0 odd:bg-[#FAFCFA] even:bg-[#F0F5F0]">
                                         <td className="whitespace-nowrap p-2 text-left">{m.market}</td>
                                         <td className="whitespace-nowrap p-2 text-center">{m.division}</td>
-                                        <td className="whitespace-nowrap p-2 text-center">{m.min} টাকা</td>
-                                        <td className="whitespace-nowrap p-2 text-center">{m.max} টাকা</td>
-                                        <td className="whitespace-nowrap p-2 text-right font-semibold">{((m.min + m.max) / 2).toFixed(2).replace(/\.00$/, "")} টাকা</td>
+                                        <td className="whitespace-nowrap p-2 text-center">{Number(m.min).toLocaleString("bn-BD")} টাকা</td>
+                                        <td className="whitespace-nowrap p-2 text-center">{Number(m.max).toLocaleString("bn-BD")} টাকা</td>
+                                        <td className="whitespace-nowrap p-2 text-right font-semibold">{Number(((m.min+m.max)/2).toFixed(2).replace(/\.00$/, "")).toLocaleString("bn-BD")} টাকা</td>
                                     </tr>
                                 ))
                             }

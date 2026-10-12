@@ -21,21 +21,33 @@ const PriceIncrease = ({data}:AllProductsProps) => {
                                         <div className='w-10 h-10 rounded-lg bg-base-300 flex items-center justify-center text-3xl'>{m.image}</div>
                                         <div>
                                             <h2 className="card-title font-extrabold">{m.nameBn}</h2>
-                                            <p>{m.unit}</p>
+                                            <p>প্রতি/{m.unit === "kg" ? "কেজি" : m.unit === "litre" ? "লিটার" : m.unit === "piece" ? "পিস" : m.unit === "dozen" ? "ডজন" : m.unit}</p>
                                         </div> 
                                     </div>
                                     <div>
                                         <p className='font-bold'>আজকের দাম</p>
                                         <div className='flex justify-between'>
                                         <div className='flex items-center gap-2'>
-                                            <p className='font-extrabold text-2xl'>{m.today}</p>
+                                            <p className='font-extrabold text-2xl'>{Number(m.today).toLocaleString("bn-BD")}</p>
                                             <p>টাকা</p>
                                         </div>
-                                        <div className='flex items-center gap-2'>
-                                            <p>{m.change.dir}</p>
-                                            <p>{m.change.pct}</p>
-                                            <p>%</p>
-                                        </div>
+                                        <div className='flex items-center bg-base-300 gap-2 p-2 rounded-full'>
+                                                <span className={
+                                                    m.change.dir === "flat"
+                                                        ? "text-gray-700"
+                                                        : m.change.dir === "up"
+                                                            ? "text-red-500"
+                                                            : "text-green-600"
+                                                }>
+                                                    {m.change.dir === "flat"
+                                                        ? "—"
+                                                        : m.change.dir === "up"
+                                                            ? "▲"
+                                                            : "▼"
+                                                    }{" "}
+                                                    {Number(m.change.pct).toLocaleString("bn-BD")}%
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

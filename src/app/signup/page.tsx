@@ -5,48 +5,55 @@ import logo2 from "@/assets/Github.png"
 import { redirect } from "next/navigation";
 import { authClient, signUp } from "@/lib/auth-client";
 import React from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Link from "next/link";
 
 const SignUpPage = () => {
     const onSubmit = async (e: React.SubmitEvent<HTMLElement>) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const user = Object.fromEntries(formData.entries()) as {name: string, email: string, password: string, image:string};
+        const user = Object.fromEntries(formData.entries()) as { name: string, email: string, password: string, image: string };
+        if (user.password.length < 8) {
+            toast.error("পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে!");
+            return;
+        }
+
+        if (user.password !== formData.get("confirmPassword")) {
+            toast.error("পাসওয়ার্ড দুটি মিলছে না!");
+            return;
+        }
         console.log(user);
-        const {data, error} = await signUp.email({
+        const { data, error } = await signUp.email({
             name: user.name,
             email: user.email,
             password: user.password,
             image: user?.image
         });
-        if(data){
-            console.log(data);
-            redirect("/");
-            toast.success("Sign up successfully completed");
+        if (data) {
+            toast.success('অ্যাকাউন্ট তৈরি সফল হয়েছে!');
+            redirect("/signin");
         }
-        if(error){
-            console.log(error);
-            toast.error(error.message);
+        if (error) {
+            toast.error('ইমেইল অথবা পাসওয়ার্ড সঠিক নয়!')
         }
     }
     const handleGoogleSignIn = async () => {
-                 const data = await authClient.signIn.social({
-        provider: "google",
-      });
-      console.log(data);
-            }
+        const data = await authClient.signIn.social({
+            provider: "google",
+        });
+        console.log(data);
+    }
     const handleGithubSignIn = async () => {
-                 const data = await authClient.signIn.social({
-        provider: "google",
-      });
-      console.log(data);
-            }
+        const data = await authClient.signIn.social({
+            provider: "google",
+        });
+        console.log(data);
+    }
     return (
         <div className="max-w-300 mx-auto w-full flex flex-col justify-center items-center my-5">
             <h2 className="font-extrabold text-3xl">অ্যাকাউন্ট তৈরি করুন</h2>
             <p className="pb-6">বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।</p>
-           <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4">
 
                     <label className="label text-lg text-[#1D271F]">নাম</label>
@@ -69,25 +76,25 @@ const SignUpPage = () => {
 
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-3">
-                        
-                        <button onClick={handleGoogleSignIn} className="btn btn-active"><Image src={logo1} height={20} width={20} alt="logo1"></Image> Google দিয়ে চালিয়ে যান</button>
+
+                            <button onClick={handleGoogleSignIn} className="btn btn-active"><Image src={logo1} height={20} width={20} alt="logo1"></Image> Google দিয়ে চালিয়ে যান</button>
                         </div>
                         <div className="flex items-center gap-1">
-                        
-                        <button onClick={handleGithubSignIn} className="btn btn-active"><Image src={logo2} height={20} width={20} alt="logo2"></Image> GitHub দিয়ে চালিয়ে যান</button>
+
+                            <button onClick={handleGithubSignIn} className="btn btn-active"><Image src={logo2} height={20} width={20} alt="logo2"></Image> GitHub দিয়ে চালিয়ে যান</button>
                         </div>
                     </div>
                     <Link href={"/signin"}>
-                    <div className="flex justify-center items-center my-4">
-                        <p className="text-lg">অ্যাকাউন্ট আছে? <span className="text-[#05893E]">সাইন ইন করুন</span></p>
-                    </div>
+                        <div className="flex justify-center items-center my-4">
+                            <p className="text-lg">অ্যাকাউন্ট আছে? <span className="text-[#05893E]">সাইন ইন করুন</span></p>
+                        </div>
                     </Link>
                 </fieldset>
             </form>
             <Link href={"/"}>
-            <div className="flex justify-center items-center w-md pt-6">
-                <p className="text-sm text-[#1D271F]">← হোম পেজে ফিরে যান</p>
-            </div>
+                <div className="flex justify-center items-center w-md pt-6">
+                    <p className="text-sm text-[#1D271F]">← হোম পেজে ফিরে যান</p>
+                </div>
             </Link>
         </div>
     );

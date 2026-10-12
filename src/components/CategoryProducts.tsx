@@ -39,7 +39,7 @@ const CategoryProducts = ({data}:CategoryProductsProps) => {
                         <div className='w-10 h-10 rounded-lg bg-base-300 flex items-center justify-center text-3xl'>{t.image}</div>
                         <div>
                         <p className="text-3xl font-extrabold">{t.categoryNameBn}</p>
-                        <p>{sortProducts.length}টি পণ্যের আজকের দাম ও পরিবর্তন</p>
+                        <p>{Number(sortProducts.length).toLocaleString("bn-BD")}টি পণ্যের আজকের দাম ও পরিবর্তন</p>
                         </div>
                     </div>
                 )
@@ -55,7 +55,7 @@ const CategoryProducts = ({data}:CategoryProductsProps) => {
                     </select>
                 </div>
             </div>
-            <p>মোট {sortProducts.length}টি পণ্য দেখানো হচ্ছে</p>
+            <p>মোট {Number(sortProducts.length).toLocaleString("bn-BD")}টি পণ্য দেখানো হচ্ছে</p>
             <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 rounded-2xl mt-4'>
                 {
                     sortProducts.map((m:ICategory) =>
@@ -66,21 +66,33 @@ const CategoryProducts = ({data}:CategoryProductsProps) => {
                                         <div className='w-10 h-10 rounded-lg bg-base-300 flex items-center justify-center text-3xl'>{m.image}</div>
                                         <div>
                                             <h2 className="card-title font-extrabold">{m.nameBn}</h2>
-                                            <p>{m.unit}</p>
+                                            <p>প্রতি {m.unit === "kg" ? "কেজি" : m.unit === "litre" ? "লিটার" : m.unit === "piece" ? "পিস" : m.unit === "dozen" ? "ডজন" : m.unit}</p>
                                         </div>
                                     </div>
                                     <div>
                                         <p className='font-bold'>আজকের দাম</p>
                                         <div className='flex justify-between'>
                                             <div className='flex items-center gap-2'>
-                                                <p className='font-extrabold text-2xl'>{m.today}</p>
+                                                <p className='font-extrabold text-2xl'>{Number(m.today).toLocaleString("bn-BD")}</p>
                                                 <p>টাকা</p>
                                             </div>
-                                            <div className='flex items-center gap-2 bg-[#EEF5EF]'>
-                                            <p className="text-green-500"> {m.change.dir} </p>
-                                            <p>{m.change.pct} %</p>
-
-                                        </div>
+                                            <div className='flex items-center bg-base-300 gap-2 p-2 rounded-full'>
+                                                <span className={
+                                                    m.change.dir === "flat"
+                                                        ? "text-gray-700"
+                                                        : m.change.dir === "up"
+                                                            ? "text-red-500"
+                                                            : "text-green-600"
+                                                }>
+                                                    {m.change.dir === "flat"
+                                                        ? "—"
+                                                        : m.change.dir === "up"
+                                                            ? "▲"
+                                                            : "▼"
+                                                    }{" "}
+                                                    {Math.abs(Number(m.change.pct)).toLocaleString("bn-BD")}%
+                                                </span>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
