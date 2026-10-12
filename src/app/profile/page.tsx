@@ -2,7 +2,6 @@
 
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
 import toast from "react-hot-toast";
@@ -22,6 +21,7 @@ const ProfilePage = () => {
         if(!newUser){
             toast.error('প্রোফাইল আপডেট ব্যর্থ হয়েছে!');
         }
+        redirect("/profile/update");
     }
     const { data: session } = authClient.useSession();
         const user = session?.user;
@@ -56,7 +56,7 @@ const ProfilePage = () => {
             <form onSubmit={handleUpdateUser}>
                 <fieldset className="flex flex-col items-center w-100">
                     <input name="name" type="text" className="input  w-full text-lg text-[#1D271F]"/>
-                    <Link href={"/profile/update"}><button type="submit" className="btn w-full bg-[#05893E] text-white mt-4 text-lg ">আপডেট </button></Link>
+                   <button type="submit" className="btn w-full bg-[#05893E] text-white mt-4 text-lg ">আপডেট </button>
                     </fieldset>
             </form>
             </div>
